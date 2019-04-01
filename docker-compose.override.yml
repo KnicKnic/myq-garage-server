@@ -1,0 +1,7 @@
+version: '2'
+
+services:
+  garage_door_service:
+    build: .
+    image: garage_door_myq:1
+    restart: always

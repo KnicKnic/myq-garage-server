@@ -1,0 +1,16 @@
+
+[backends]
+  [backends.garage_door_service]
+    [backends.garage_door_service.servers]
+      [backends.garage_door_service.servers.server1]
+        url = "http://garage_door_service:80"
+
+[frontends]
+  [frontends.garage_door_service]
+    backend = "garage_door_service"
+    #passing host header is not necessary in this example, but may be needed by certain websites
+    passHostHeader = true
+      [frontends.garage_door_service.routes.garage_door_service]
+        rule = "PathPrefixStrip:/some_password; HostRegexp:garage.{restdomain:[\\-a-z0-9.]+}"
+
+

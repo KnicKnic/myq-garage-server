@@ -1,0 +1,3 @@
+[submodule "myq-garage"]
+	path = myq-garage
+	url = https://github.com/Einstein42/myq-garage.git
