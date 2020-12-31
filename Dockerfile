@@ -1,6 +1,6 @@
 
 # Pull base image
-FROM ubuntu
+FROM debian
 
 # Install dependencies
 RUN apt-get update --fix-missing \
@@ -11,12 +11,18 @@ RUN apt-get update --fix-missing \
     python3-virtualenv \
     python3-flask \
     python3-requests \
+    gcc \
+    libffi-dev \
+    python3-setuptools \
     --no-install-recommends \
  && rm -rf /var/lib/apt/lists/*
 
-COPY /flask_prog.py /data/
-COPY /myq-garage/myq-garage.py /data/
-COPY /myq-garage/config.ini /data/
+RUN pip3 install --upgrade pip
+RUN pip3 install pymyq
+RUN pip3 install aiohttp
+RUN pip3 install flask
+
+COPY *.py /data/
 # Define working directory
 WORKDIR /data
 

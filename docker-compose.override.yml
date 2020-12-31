@@ -5,3 +5,6 @@ services:
     build: .
     image: garage_door_myq:1
     restart: always
+    environment:
+      - USERNAME=example@email.com
+      - PASSWORD=examplepassword
