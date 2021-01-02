@@ -10,6 +10,9 @@ on:
     - master
     - main
 
+    
+env:
+  SECRETS_ARE_AVAILABLE: ${{ secrets.DOCKERHUB_USERNAME }}
 
 jobs:
   amd64_only_build:
@@ -50,20 +53,28 @@ jobs:
       name: Available platforms
       run: echo ${{ steps.buildx.outputs.platforms }}
     -
+      name: Build
+      if:  ${{ !env.SECRETS_ARE_AVAILABLE }}
+      # all platforms from available platforms that are also available from debian:latest
+      run: |
+        docker build . --platform linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/386,linux/arm/v7,linux/arm/v6 --cache-from type=registry,ref=knicknic/myq-garage-server:build
+    -
       name: Login to Docker Hub
       uses: docker/login-action@v1
+      if:  ${{ env.SECRETS_ARE_AVAILABLE }}
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }} 
-    - name: Build
-      # all platforms from available platforms that are also available from debian:latest
-      # we are pushing to :build_pr just so we can update the :build cache
-      run: |
-        docker build . -t knicknic/myq-garage-server:build_pr --platform linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/386,linux/arm/v7,linux/arm/v6 --cache-from type=registry,ref=knicknic/myq-garage-server:build --cache-to type=registry,ref=knicknic/myq-garage-server:build,node=max --push
     -
-      name: Push
+      name: Build and push Cache (not from forks)
+      if:  ${{ env.SECRETS_ARE_AVAILABLE && github.event_name != 'push' }}
+      # all platforms from available platforms that are also available from debian:latest
+      run: |
+        docker build . --platform linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/386,linux/arm/v7,linux/arm/v6 --cache-from type=registry,ref=knicknic/myq-garage-server:build --cache-to type=registry,ref=knicknic/myq-garage-server:build,node=max,push=true
+    -
+      name: Push Image & push cache
       if: ${{ github.event_name == 'push' }}
       # all platforms from available platforms that are also available from debian:latest
       run: |
-        docker build . -t knicknic/myq-garage-server:t1 --platform linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/386,linux/arm/v7,linux/arm/v6 --cache-from type=registry,ref=knicknic/myq-garage-server:build --cache-to type=registry,ref=knicknic/myq-garage-server:build,node=max --push
+        docker build . -t knicknic/myq-garage-server:t1 --platform linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/386,linux/arm/v7,linux/arm/v6  --cache-from type=registry,ref=knicknic/myq-garage-server:build --cache-to type=registry,ref=knicknic/myq-garage-server:build,node=max,push=true --push
 
