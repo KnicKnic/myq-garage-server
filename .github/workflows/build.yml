@@ -53,7 +53,7 @@ jobs:
       name: Available platforms
       run: echo ${{ steps.buildx.outputs.platforms }}
     -
-      name: Build
+      name: Build (run on PR from forks)
       if:  ${{ !env.SECRETS_ARE_AVAILABLE }}
       # all platforms from available platforms that are also available from debian:latest
       run: |
@@ -66,13 +66,13 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }} 
     -
-      name: Build and push Cache (not from forks)
+      name: Build and push cache (run on PR not from forks)
       if:  ${{ env.SECRETS_ARE_AVAILABLE && github.event_name != 'push' }}
       # all platforms from available platforms that are also available from debian:latest
       run: |
         docker build . --platform linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/386,linux/arm/v7,linux/arm/v6 --cache-from type=registry,ref=knicknic/myq-garage-server:build --cache-to type=registry,ref=knicknic/myq-garage-server:build,node=max,push=true
     -
-      name: Push Image & push cache
+      name: Build & push image & push cache
       if: ${{ github.event_name == 'push' }}
       # all platforms from available platforms that are also available from debian:latest
       run: |
