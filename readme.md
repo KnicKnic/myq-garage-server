@@ -38,4 +38,6 @@ Dockerfile | makes the container that closes and opens garage door
 docker-compose.override.yml | extends traefik_duckdns docker-compose to add this project
 rules/garage.toml | traefik config file to add webserver & expose it securely to internet
 pymyq-wrapper.py | example warpper for [pymyq](https://github.com/arraylabs/pymyq) that is controlled via exec
+pyproject.toml | [poetry](https://python-poetry.org/) project file
+poetry.lock | [poetry](https://python-poetry.org/) lock file
 
