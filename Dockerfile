@@ -1,6 +1,6 @@
 
 # Pull base image
-FROM debian:latest@sha256:3ac5e3f2fdd73d124e538d0a21f9fa9ba273bebed18af5f38bd87c2e69c04cb5
+FROM debian:latest@sha256:5b5fa7e155b1f19dffb996ea64e55520b80d5bd7a8fdb5aed1acabd217e9ed59
 
 # Install dependencies
 RUN apt-get update --fix-missing \
