@@ -1,0 +1,10 @@
+version: 2
+updates:
+  # Enable version updates for Docker
+  - package-ecosystem: "docker"
+    # Look for a `Dockerfile` in the `root` directory
+    directory: "/"
+    # live doesn't seem to be supported, but dependabot's docs are not great
+    # see - https://dependabot.com/blog/live-updates/
+    schedule:
+      interval: "daily"
