@@ -14,14 +14,23 @@ RUN apt-get update --fix-missing \
     gcc \
     libffi-dev \
     python3-setuptools \
-    --no-install-recommends \
- && rm -rf /var/lib/apt/lists/*
+    --no-install-recommends 
 
-RUN pip3 install --upgrade pip pymyq aiohttp flask
 
-COPY *.py /data/
+#  && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get install libssl-dev  -y
+
+RUN pip3 install --upgrade pip poetry
+# RUN pip3 install --upgrade pip pymyq aiohttp flask
+
 # Define working directory
 WORKDIR /data
+COPY * /data/
+
+
+
+RUN poetry install
 
 EXPOSE "80"
 

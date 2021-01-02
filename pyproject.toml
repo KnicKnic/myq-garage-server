@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "myq-garage-server"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+Flask = "^1.1.2"
+pymyq = "^2.0.12"
+aiohttp = "^3.7.3"
+
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
