@@ -7,9 +7,9 @@ import subprocess
 app = Flask(__name__)
 
 # serves to test
-@app.route("/secret/<secret>")
-def hello(secret):
-    st = generate_log_string('secret', secret)
+@app.route("/echo/<secret>")
+def hello(echo):
+    st = generate_log_string('echo', secret)
     log(st)
     return st
 

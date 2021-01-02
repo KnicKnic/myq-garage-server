@@ -1,6 +1,6 @@
 
 # Pull base image
-FROM debian
+FROM debian:latest@sha256:3ac5e3f2fdd73d124e538d0a21f9fa9ba273bebed18af5f38bd87c2e69c04cb5
 
 # Install dependencies
 RUN apt-get update --fix-missing \
@@ -17,14 +17,13 @@ RUN apt-get update --fix-missing \
     --no-install-recommends \
  && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install --upgrade pip
-RUN pip3 install pymyq
-RUN pip3 install aiohttp
-RUN pip3 install flask
+RUN pip3 install --upgrade pip pymyq aiohttp flask
 
 COPY *.py /data/
 # Define working directory
 WORKDIR /data
+
+EXPOSE "80"
 
 # Define default command
 CMD ["python3", "flask_prog.py"]

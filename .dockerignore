@@ -1,4 +1,2 @@
 **
-!flask_prog.py
-!myq-garage/myq-garage.py
-!myq-garage/config.ini
+!*.py
