@@ -13,6 +13,8 @@ on:
     
 env:
   SECRETS_ARE_AVAILABLE: ${{ secrets.DOCKERHUB_USERNAME }}
+  BUILD_REPOSITORY: knicknic/myq-garage-server
+  BUILD_PLATFORMS: linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/386,linux/arm/v7,linux/arm/v6 # all platforms from available platforms that are also available from debian:latest
 
 jobs:
   amd64_only_build:
@@ -32,8 +34,8 @@ jobs:
     - 
       name: Build    
       run: |
-        docker build . --platform linux/amd64 --cache-from type=registry,ref=knicknic/myq-garage-server:build
-        # DOCKER_BUILDKIT=1 docker build . --platform linux/amd64 --cache-from type=registry,ref=knicknic/myq-garage-server:build
+        docker build . --platform linux/amd64 --cache-from type=registry,ref=${{ env.BUILD_REPOSITORY }}:build
+        # DOCKER_BUILDKIT=1 docker build . --platform linux/amd64 --cache-from type=registry,ref=${{ env.BUILD_REPOSITORY }}:build
   build_all_arch:
     runs-on: ubuntu-latest
     steps:
@@ -57,7 +59,7 @@ jobs:
       if:  ${{ !env.SECRETS_ARE_AVAILABLE }}
       # all platforms from available platforms that are also available from debian:latest
       run: |
-        docker build . --platform linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/386,linux/arm/v7,linux/arm/v6 --cache-from type=registry,ref=knicknic/myq-garage-server:build
+        docker build . --platform ${{ env.BUILD_PLATFORMS }} --cache-from type=registry,ref=${{ env.BUILD_REPOSITORY }}:build
     -
       name: Login to Docker Hub
       uses: docker/login-action@v1
@@ -70,11 +72,10 @@ jobs:
       if:  ${{ env.SECRETS_ARE_AVAILABLE && github.event_name != 'push' }}
       # all platforms from available platforms that are also available from debian:latest
       run: |
-        docker build . --platform linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/386,linux/arm/v7,linux/arm/v6 --cache-from type=registry,ref=knicknic/myq-garage-server:build --cache-to type=registry,ref=knicknic/myq-garage-server:build,node=max,push=true
+        docker build . --platform ${{ env.BUILD_PLATFORMS }} --cache-from type=registry,ref=${{ env.BUILD_REPOSITORY }}:build --cache-to type=registry,ref=${{ env.BUILD_REPOSITORY }}:build,node=max,push=true
     -
       name: Build & push image & push cache
       if: ${{ github.event_name == 'push' }}
       # all platforms from available platforms that are also available from debian:latest
       run: |
-        docker build . -t knicknic/myq-garage-server:t1 --platform linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/386,linux/arm/v7,linux/arm/v6  --cache-from type=registry,ref=knicknic/myq-garage-server:build --cache-to type=registry,ref=knicknic/myq-garage-server:build,node=max,push=true --push
-
+        docker build . -t ${{ env.BUILD_REPOSITORY }}:t1 --platform ${{ env.BUILD_PLATFORMS }}  --cache-from type=registry,ref=${{ env.BUILD_REPOSITORY }}:build --cache-to type=registry,ref=${{ env.BUILD_REPOSITORY }}:build,node=max,push=true --push
