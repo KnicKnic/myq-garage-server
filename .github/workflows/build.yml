@@ -78,4 +78,4 @@ jobs:
       if: ${{ github.event_name == 'push' }}
       # all platforms from available platforms that are also available from debian:latest
       run: |
-        docker build . -t ${{ env.BUILD_REPOSITORY }}:t1 --platform ${{ env.BUILD_PLATFORMS }}  --cache-from type=registry,ref=${{ env.BUILD_REPOSITORY }}:build --cache-to type=registry,ref=${{ env.BUILD_REPOSITORY }}:build,node=max,push=true --push
+        docker build . -t ${{ env.BUILD_REPOSITORY }}:test --platform ${{ env.BUILD_PLATFORMS }}  --cache-from type=registry,ref=${{ env.BUILD_REPOSITORY }}:build --cache-to type=registry,ref=${{ env.BUILD_REPOSITORY }}:build,node=max,push=true --push

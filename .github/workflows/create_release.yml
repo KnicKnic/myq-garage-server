@@ -1,0 +1,52 @@
+name: create_release
+
+on:
+  release:
+    types: [published]
+
+    
+env:
+  SECRETS_ARE_AVAILABLE: ${{ secrets.DOCKERHUB_USERNAME }}
+  BUILD_REPOSITORY: knicknic/myq-garage-server
+  BUILD_PLATFORMS: linux/amd64,linux/arm64,linux/ppc64le,linux/s390x,linux/386,linux/arm/v7,linux/arm/v6 # all platforms from available platforms that are also available from debian:latest
+
+jobs:
+  build_all_arch:
+    runs-on: ubuntu-latest
+    steps:
+    - 
+      uses: actions/checkout@v2
+    -
+      name: Set up QEMU
+      uses: docker/setup-qemu-action@v1
+    -
+      name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+      with:
+        install: true
+        # above aliases `docker buildx build` as `docker build`
+    -
+      name: Available platforms
+      run: echo ${{ steps.buildx.outputs.platforms }}
+    -
+      name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }} 
+    -
+      name: Get short tag name
+      #converts v1.0.0 -> v1
+      id: shortTagName
+      shell: pwsh
+      env: 
+        SEMANTIC_VERSION: ${{ github.event.release.tag_name }}
+      run: |
+        $shortVersion = $env:SEMANTIC_VERSION.split(".")[0]
+        echo "::set-output name=tag::$shortVersion"
+    -
+      name: Build & push image & push cache
+      # all platforms from available platforms that are also available from debian:latest
+      run: |
+        docker build . -t ${{ env.BUILD_REPOSITORY }}:latest -t ${{ env.BUILD_REPOSITORY }}:${{ steps.shortTagName.outputs.tag }} -t ${{ env.BUILD_REPOSITORY }}:${{ github.event.release.tag_name }} --platform ${{ env.BUILD_PLATFORMS }}  --cache-from type=registry,ref=${{ env.BUILD_REPOSITORY }}:build --cache-to type=registry,ref=${{ env.BUILD_REPOSITORY }}:build,node=max,push=true --push
