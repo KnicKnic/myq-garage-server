@@ -1,3 +1,4 @@
+[![Docker Image Version (latest semver)](https://img.shields.io/docker/v/knicknic/myq-garage-server?label=docker.io%2Fknicknic%2Fmyq-garage-server&sort=semver)](https://hub.docker.com/repository/docker/knicknic/myq-garage-server/tags?page=1&ordering=last_updated&name=v1)
 # myQ garage door server
 This repository provides a webserver for [pymyq](https://github.com/arraylabs/pymyq) door project and the necessary setup to host it on your home internet securely. It uses dynamic dns powered by [duckdns](https://duckdns.org) and TLS certificates([Let's Encrypt](https://letsencrypt.org)) obtained by [traefik](https://traefik.io) to accomplish secure communication to a home server. Allowing [IFTTT](https://ifttt.com) or [Locative](https://apps.apple.com/us/app/locative/id725198453) or any other geofencing app to use your phone's location to automatically close your garage door when you leave.
 
