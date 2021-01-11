@@ -166,7 +166,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "pymyq"
-version = "2.0.12"
+version = "2.0.13"
 description = "Python package for controlling MyQ-Enabled Garage Door"
 category = "main"
 optional = false
@@ -213,7 +213,7 @@ typing-extensions = {version = ">=3.7.4", markers = "python_version < \"3.8\""}
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "8124dfbcda3af24078d47f00b7f897d1fb6a306946c8810556ba6aa25eeb7f2a"
+content-hash = "a4db37db8369ba5cf76f0d05097e4b48eaf6554237b66b5b9a5e41f3302ac0e5"
 
 [metadata.files]
 aiodns = [
@@ -439,8 +439,8 @@ pycparser = [
     {file = "pycparser-2.20.tar.gz", hash = "sha256:2d475327684562c3a96cc71adf7dc8c4f0565175cf86b6d7a404ff4c771f15f0"},
 ]
 pymyq = [
-    {file = "pymyq-2.0.12-py2.py3-none-any.whl", hash = "sha256:f836b520e876c5ec93f1154128dbda48a433146c53cf550f2c5d842ea77bc632"},
-    {file = "pymyq-2.0.12.tar.gz", hash = "sha256:912b20874190a9f6ecba912e0ffd8c4eba9be9e22ddfbed76394324b8f34cd47"},
+    {file = "pymyq-2.0.13-py2.py3-none-any.whl", hash = "sha256:6b7d1e1f903c1d78ce2a9f125363500671fd9bcf733a16717b77a46189b5d552"},
+    {file = "pymyq-2.0.13.tar.gz", hash = "sha256:aed8eb0ffbf5aef21a60b548c3d66a347d20ed0285ae55ee636f3de0c7395c3c"},
 ]
 typing-extensions = [
     {file = "typing_extensions-3.7.4.3-py2-none-any.whl", hash = "sha256:dafc7639cde7f1b6e1acc0f457842a83e722ccca8eef5270af2d74792619a89f"},
