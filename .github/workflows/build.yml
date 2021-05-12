@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - 
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2.3.4
     -
       #only installing this step because I couldn't figure out how to use build caching in docker otherwise
       name: Set up Docker Buildx
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - 
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2.3.4
     -
       name: Set up QEMU
       uses: docker/setup-qemu-action@v1
