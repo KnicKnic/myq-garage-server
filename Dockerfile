@@ -4,7 +4,7 @@
 # See https://docs.docker.com/develop/develop-images/multistage-build/
 
 # Creating a python base with shared environment variables
-FROM python:3.9.1-slim-buster@sha256:bf3ec573c0ae0d0c619c3f3e0e9490878432bf7a5c63a643b6c39c9878b51191 as python-base
+FROM python:3.10.3-slim-buster@sha256:55322fd776ecef7740fa962cd5c53ae2c2764d6faa24c17647560721b13981ec as python-base
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
