@@ -1,3 +1,14 @@
+# webserver creates
+# /close/<garage door name>
+# /open/<garage door name>
+# to open and close your garage door
+# entry points produce 200 error code always
+# output is useful for trouble shooting only
+
+# Seperate entrypoint exists for testing, that is /secret/<messsage>
+# which will output a reply that contains the message & 200 error code
+
+
 import datetime
 import time
 import sys

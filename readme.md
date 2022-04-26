@@ -25,7 +25,7 @@ You can setup geofencing to auto close your garage door using IFTTT when you lea
 
 See https://www.howtogeek.com/221555/how-to-create-geographic-event-triggers-with-your-smartphone-and-ifttt/ for more info on setting up geofencing for your phone.
 
-## Files expained
+## Files explained
 files | explanation
 --- | ---
 flask_prog.py | python webserver that calls open and close garage door
